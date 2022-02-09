@@ -4,18 +4,24 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+클래스 레벨에서 테스트 이름 설정이 가능한데 ReplaceUnderscores.Class => _로 표시한 모든 부분은 공백으로 처리
+ */
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
 
     @Test
-    void create() {
+    @DisplayName("스터디 만들기 ╯°□°）╯")
+        // 테스트 이름 설정 가능
+    void create_new_study() {
         Study study = new Study(); // study 인스턴스 생성
         assertNotNull(study); // 값이 null인지 확인
         System.out.println("create");
     }
 
     @Test
-    @Disabled // 해당 테스트 실행X
-    void create1() {
+    @DisplayName("스터디 만들기 \uD83D\uDE31")
+    void create_new_study_again() {
         System.out.println("create1");
     }
 
