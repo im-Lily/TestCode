@@ -2,6 +2,7 @@ package com.whiteship.javatest;
 
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -12,11 +13,18 @@ class StudyTest {
 
     @Test
     @DisplayName("스터디 만들기 ╯°□°）╯")
-        // 테스트 이름 설정 가능
+        // 테스트 이름 설정 가능 => DisplayNameGeneration보다 우선순위가 높음
     void create_new_study() {
-        Study study = new Study(); // study 인스턴스 생성
-        assertNotNull(study); // 값이 null인지 확인
-        System.out.println("create");
+        Study study = new Study(10); // study 인스턴스 생성
+        // assertAll에 포함되면 테스트 실패 시 한 번에 파악할 수 있음
+        assertAll(
+                () -> assertNotNull(study),
+                () -> assertEquals(StudyStatus.DRAFT, study.getStatus(),
+                        () -> "스터디를 처음 만들면 " + StudyStatus.DRAFT + " 상태다."), // 람다식으로 표현할 경우 문자 연산을 성공 시에만 수행하기 때문에 성능 향상
+                () -> assertTrue(study.getLimit() > 0, "스터디 최대 참석 가능 인원은 10명입니다.")
+        );
+        System.out.println("study.getLimit() = " + study.getLimit());
+        assertThat(study.getLimit()).isGreaterThan(0);
     }
 
     @Test
