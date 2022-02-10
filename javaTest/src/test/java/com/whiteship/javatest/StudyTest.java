@@ -1,5 +1,7 @@
 package com.whiteship.javatest;
 
+import com.whiteship.javatest.domain.Study;
+import com.whiteship.javatest.domain.StudyStatus;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
