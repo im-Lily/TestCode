@@ -2,10 +2,13 @@ package com.whiteship.javatest;
 
 import com.whiteship.javatest.domain.Study;
 import com.whiteship.javatest.domain.StudyStatus;
+import jdk.jfr.Enabled;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.OS;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /*
 클래스 레벨에서 테스트 이름 설정이 가능한데 ReplaceUnderscores.Class => _로 표시한 모든 부분은 공백으로 처리
@@ -14,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudyTest {
 
     @Test
-    @DisplayName("스터디 만들기 ╯°□°）╯")
-        // 테스트 이름 설정 가능 => DisplayNameGeneration보다 우선순위가 높음
+    @DisplayName("스터디 만들기 ╯°□°）╯") // 테스트 이름 설정 가능 => DisplayNameGeneration보다 우선순위가 높음
+//    @Disabled // 해당 테스트 실행하지 않을거야
     void create_new_study() {
         Study study = new Study(10); // study 인스턴스 생성
         // assertAll에 포함되면 테스트 실패 시 한 번에 파악할 수 있음
@@ -23,10 +26,10 @@ class StudyTest {
                 () -> assertNotNull(study),
                 () -> assertEquals(StudyStatus.DRAFT, study.getStatus(),
                         () -> "스터디를 처음 만들면 " + StudyStatus.DRAFT + " 상태다."), // 람다식으로 표현할 경우 문자 연산을 성공 시에만 수행하기 때문에 성능 향상
-                () -> assertTrue(study.getLimit() > 0, "스터디 최대 참석 가능 인원은 10명입니다.")
+                () -> assertTrue(study.getLimitCount() > 0, "스터디 최대 참석 가능 인원은 10명입니다.")
         );
-        System.out.println("study.getLimit() = " + study.getLimit());
-        assertThat(study.getLimit()).isGreaterThan(0);
+        System.out.println("study.getLimit() = " + study.getLimitCount());
+        assertThat(study.getLimitCount()).isGreaterThan(0);
     }
 
     @Test
